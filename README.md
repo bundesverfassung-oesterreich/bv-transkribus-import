@@ -8,9 +8,9 @@ workflow repo to fetch mets files from goobi and ingest them to transkribus
 * create a virtual env `virtualenv env`
 * source it `source env/bin/activate`
 * update pip `pip install -U pip`
-* install dependencies `pip install -r requirments.txt`
+* install dependencies `pip install -r ./scripts/requirments.txt`
 * provide Transkribus credentials in a file called `secret.env` as in `dummy.env`
-* set env varibales by running `source export_env_variables.sh`
+* set env varibales by running `source ./scripts/export_env_variables.sh`
 
 
 # run
