@@ -51,3 +51,7 @@ def upload_goobidata_via_mets():
                     print("upload worked, all good")
                 else:
                     print(f"upload of '{doc_title}' to '{transkribus_collection_id}' failed.")
+
+
+if __name__=="__main__":
+    upload_goobidata_via_mets()
