@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Install Python Packages
         run: |
-          pip install -r requirements.txt
+          pip install -r ./scripts/requirements.txt
       - name: ingest goobi-mets to transcribus
         run: |
           python scripts/ingest.py
