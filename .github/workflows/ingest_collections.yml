@@ -1,6 +1,11 @@
 name: load mets to transcribus
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      base_row_dump_workflow:
+        description: "name of the baserow-dump workflow in bundesverfassung-oesterreich/bv-entities"
+        required: true
+        default: 'Dump Entities from Baserow'
 
 jobs:
   download:
@@ -9,11 +14,18 @@ jobs:
     env:
       TRANSKRIBUS_USER: ${{secrets.TR_USER}}
       TRANSKRIBUS_PASSWORD: ${{secrets.TR_PW}}
+      USER_TOKEN: ${{ secrets.ACTIONS_KEY }}
     steps:
       - uses: actions/checkout@v3
       - name: Install Python Packages
         run: |
           pip install -r ./scripts/requirements.txt
+      - name: trigger base_row_dump_workflow to make shure, dumps are up to date
+        run: |
+          curl --request POST \
+          --url 'https://api.github.com/repos/bundesverfassung-oesterreich/bv-entities/dispatches' \
+          --header "authorization: token $USER_TOKEN" \
+          --data '{"event_type": "triggered by transkribus-import-workflow"}'
       - name: ingest goobi-mets to transcribus
         run: |
           python scripts/ingest.py
