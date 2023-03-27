@@ -10,6 +10,7 @@ jobs:
       TRANSKRIBUS_USER: ${{secrets.TR_USER}}
       TRANSKRIBUS_PASSWORD: ${{secrets.TR_PW}}
     steps:
+      - uses: actions/checkout@v3
       - name: Install Python Packages
         run: |
           pip install -r ./scripts/requirements.txt
