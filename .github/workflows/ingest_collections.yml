@@ -1,0 +1,18 @@
+name: load mets to transcribus
+on:
+  workflow_dispatch
+
+jobs:
+  download:
+    name: create transcribus documents from mets
+    runs-on: ubuntu-latest
+    env:
+      TRANSKRIBUS_USER: ${{secrets.TR_USER}}
+      TRANSKRIBUS_PASSWORD: ${{secrets.TR_PW}}
+    steps:
+      - name: Install Python Packages
+        run: |
+          pip install -r requirements.txt
+      - name: ingest goobi-mets to transcribus
+        run: |
+          python scripts/ingest.py
