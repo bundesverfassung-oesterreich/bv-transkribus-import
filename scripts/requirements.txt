@@ -1,2 +1,2 @@
-acdh_transkribus_utils
+acdh-transkribus-utils
 requests

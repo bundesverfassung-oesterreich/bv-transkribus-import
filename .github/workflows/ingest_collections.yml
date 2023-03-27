@@ -20,6 +20,8 @@ jobs:
           --url 'https://api.github.com/repos/bundesverfassung-oesterreich/bv-entities/dispatches' \
           --header "authorization: token $USER_TOKEN" \
           --data '{"event_type": "triggered by transkribus-import-workflow"}'
+          echo "waiting for 1 minute to make shure all data are getting processed"
+          sleep 1m
       - name: ingest goobi-mets to transcribus
         run: |
           python scripts/ingest.py

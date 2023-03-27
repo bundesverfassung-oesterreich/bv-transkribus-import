@@ -43,6 +43,7 @@ def upload_goobidata_via_mets():
                 print(f"Document with title '{doc_title}' allready exists in collection '{transkribus_collection_id}'. Upload canceled.")
             else:
                 # # upload mets to transkribus
+                print("uplaoding '{doc_title}' to '{transkribus_collection_id}'")
                 upload = client.upload_mets_file_from_url(
                     f"{GOOBI_BASE_URL}{bv_id}",
                     transkribus_collection_id
