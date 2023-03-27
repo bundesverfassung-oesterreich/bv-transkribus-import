@@ -1,12 +1,6 @@
 name: load mets to transcribus
 on:
   workflow_dispatch:
-    inputs:
-      base_row_dump_workflow:
-        description: "name of the baserow-dump workflow in bundesverfassung-oesterreich/bv-entities"
-        required: true
-        default: 'Dump Entities from Baserow'
-
 jobs:
   download:
     name: create transcribus documents from mets
