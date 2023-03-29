@@ -16,11 +16,12 @@ jobs:
           pip install -r ./scripts/requirements.txt
       - name: trigger base_row_dump_workflow to make shure, dumps are up to date
         run: |
-          curl --request POST \
+          status=$(curl --request POST \
           --url 'https://api.github.com/repos/bundesverfassung-oesterreich/bv-entities/dispatches' \
           --header "authorization: token $USER_TOKEN" \
-          --data '{"event_type": "triggered by transkribus-import-workflow"}'
-          echo "waiting for 1 minute to make shure all data are getting processed"
+          --data '{"event_type": "triggered by transkribus-import-workflow"}')
+          if [ -n "$status" ]; then  exit 1; fi
+          echo "waiting for 1 minute to make shure all data are getting processed")
           sleep 1m
       - name: ingest goobi-mets to transcribus
         run: |
