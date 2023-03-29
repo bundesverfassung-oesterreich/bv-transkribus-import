@@ -21,7 +21,7 @@ jobs:
           --header "authorization: token $USER_TOKEN" \
           --data '{"event_type": "triggered by transkribus-import-workflow"}')
           if [ -n "$status" ]; then  exit 1; fi
-          echo "waiting for 1 minute to make shure all data are getting processed")
+          echo "waiting for 1 minute to make shure all data are getting processed"
           sleep 1m
       - name: ingest goobi-mets to transcribus
         run: |
