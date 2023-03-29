@@ -46,7 +46,8 @@ def upload_goobidata_via_mets():
                 print("uplaoding '{doc_title}' to '{transkribus_collection_id}'")
                 upload = client.upload_mets_file_from_url(
                     f"{GOOBI_BASE_URL}{bv_id}",
-                    transkribus_collection_id
+                    transkribus_collection_id,
+                    better_images=True
                 )
                 if upload:
                     print("upload worked, all good")
