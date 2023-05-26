@@ -9,7 +9,6 @@ jobs:
     env:
       TRANSKRIBUS_USER: ${{secrets.TR_USER}}
       TRANSKRIBUS_PASSWORD: ${{secrets.TR_PW}}
-      USER_TOKEN: ${{ secrets.ACTIONS_KEY }}
     steps:
       - uses: actions/checkout@v3
       - name: Install Python Packages

@@ -36,11 +36,11 @@ def upload_goobidata_via_mets():
         for bv_id, doc_title in items.items():
             # # check if doc_title allready exists in collection
             document_from_title = client.search_for_document(
-                title=doc_title,
+                title=doc_title.strip(),
                 col_id=transkribus_collection_id
             )
             if document_from_title:
-                print(f"Document with title '{doc_title}' allready exists in collection '{transkribus_collection_id}'. Upload canceled.")
+                print(f"Document with title '{doc_title}' already exists in collection '{transkribus_collection_id}'. Upload canceled.")
             else:
                 # # upload mets to transkribus
                 print(f"uplaoding '{doc_title}' to '{transkribus_collection_id}'")
