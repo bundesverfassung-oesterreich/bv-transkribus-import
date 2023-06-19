@@ -39,7 +39,7 @@ def upload_goobidata_via_mets():
     metadata = load_metadata_from_dump(base_row_dump_url)
     for transkribus_collection_id, items in metadata.items():
         for bv_id, doc_title in items.items():
-            mets_url = (f"{GOOBI_BASE_URL}{bv_id}",)
+            mets_url = f"{GOOBI_BASE_URL}{bv_id}"
             # # check if doc_title allready exists in collection
             doc_title = get_title_from_mets(mets_url)
             document_from_title = client.search_for_document(
