@@ -1,4 +1,4 @@
-from transkribus_utils.transkribus_utils import ACDHTranskribusUtils
+from transkribus_utils.transkribus_utils import ACDHTranskribusUtils, get_title_from_mets
 import requests
 
 base_row_dump_url = "https://raw.githubusercontent.com/bundesverfassung-oesterreich/bv-entities/main/json_dumps/document.json"
@@ -36,9 +36,10 @@ def upload_goobidata_via_mets():
     metadata = load_metadata_from_dump(base_row_dump_url)
     for transkribus_collection_id, items in metadata.items():
         for bv_id, doc_title in items.items():
+            mets_url = f"{GOOBI_BASE_URL}{bv_id}",
             # # check if doc_title allready exists in collection
             document_from_title = client.search_for_document(
-                title=doc_title.strip(), col_id=transkribus_collection_id
+                title=get_title_from_mets(mets_url), col_id=transkribus_collection_id
             )
             if document_from_title:
                 print(
@@ -48,7 +49,7 @@ def upload_goobidata_via_mets():
                 # # upload mets to transkribus
                 print(f"uplaoding '{doc_title}' to '{transkribus_collection_id}'")
                 upload = client.upload_mets_file_from_url(
-                    f"{GOOBI_BASE_URL}{bv_id}",
+                    mets_url,
                     transkribus_collection_id,
                     better_images=True,
                 )
