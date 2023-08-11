@@ -46,6 +46,7 @@ def upload_goobidata_via_mets():
                 title=doc_title, col_id=transkribus_collection_id
             )
             if document_from_title:
+                # maybe write this to baserow
                 print(
                     f"Document with title '{doc_title}' already exists in collection '{transkribus_collection_id}'. Upload canceled."
                 )
