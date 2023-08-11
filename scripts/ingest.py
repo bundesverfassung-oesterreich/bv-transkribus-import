@@ -15,17 +15,16 @@ def load_metadata_from_dump(dump_url):
     meta_data_objs_by_transkribus_id = {}
     for metadata_dict in json_data.values():
         transcribus_col_id = metadata_dict["transkribus_col_id"]
-        if not transcribus_col_id:
+        transkribus_doc_id = metadata_dict["transkribus_doc_id"]
+        if bool(transcribus_col_id) and not bool(transkribus_doc_id):
             # # entrys without collection id are being ignored
-            pass
-        else:
-            if not metadata_dict["transkribus_doc_id"]:
-                # # entrys without doc id get processed
-                if transcribus_col_id not in meta_data_objs_by_transkribus_id:
-                    meta_data_objs_by_transkribus_id[transcribus_col_id] = {}
-                meta_data_objs_by_transkribus_id[transcribus_col_id][
-                    metadata_dict["bv_id"]
-                ] = metadata_dict["doc_title"]
+            # # and only entrys without doc id get processed
+            # # regardless if field is empty string or None
+            if transcribus_col_id not in meta_data_objs_by_transkribus_id:
+                meta_data_objs_by_transkribus_id[transcribus_col_id] = {}
+            meta_data_objs_by_transkribus_id[transcribus_col_id][
+                metadata_dict["bv_id"]
+            ] = metadata_dict["doc_title"]
     return meta_data_objs_by_transkribus_id
 
 
