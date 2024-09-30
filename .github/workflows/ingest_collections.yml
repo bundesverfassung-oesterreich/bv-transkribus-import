@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Python Packages
         run: |
+          python -m pip config set global.break-system-packages true
           pip install -r ./scripts/requirements.txt
       - name: ingest goobi-mets to transcribus
         run: |
