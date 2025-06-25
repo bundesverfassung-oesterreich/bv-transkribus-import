@@ -16,13 +16,7 @@ def load_metadata_from_dump(dump_url):
     get_req = requests.get(dump_url)
     json_data = get_req.json()
     meta_data_objs_by_transkribus_id = {}
-    doc_names = []
     for metadata_dict in json_data.values():
-        doc_names.append(
-            simplify_doc_title(
-                metadata_dict["doc_title"]
-            )
-        )
         transcribus_col_id = metadata_dict["transkribus_col_id"]
         transkribus_doc_id = metadata_dict["transkribus_doc_id"]
         if bool(transcribus_col_id) and not bool(transkribus_doc_id):
@@ -34,7 +28,7 @@ def load_metadata_from_dump(dump_url):
             meta_data_objs_by_transkribus_id[transcribus_col_id][
                 metadata_dict["bv_id"]
             ] = metadata_dict["doc_title"]
-    return meta_data_objs_by_transkribus_id, doc_names
+    return meta_data_objs_by_transkribus_id
 
 def check_doc_name(doc_title, used_doc_names):
     """
@@ -51,16 +45,15 @@ def upload_goobidata_via_mets(test=False):
     # #         bv_id:doc_title,
     # #     }
     # # }
-    metadata, used_doc_names = load_metadata_from_dump(base_row_dump_url)
+    metadata = load_metadata_from_dump(base_row_dump_url)
     for transkribus_collection_id, items in metadata.items():
+        existing_docs = [simplify_doc_title(x["title"]) for x in client.list_documents(transkribus_collection_id)]
         for bv_id, doc_title in items.items():
             mets_url = f"{GOOBI_BASE_URL}{bv_id}"
             doc_title = get_title_from_mets(mets_url)
-            doc_already_exists = check_doc_name(doc_title, used_doc_names)
-            if doc_already_exists:
-                # maybe write this to baserow
-                print(
-                    f"Document with title '{doc_title}' already exists in collection '{transkribus_collection_id}'. Upload canceled."
+            if simplify_doc_title(doc_title) in existing_docs:
+                input(
+                    f"Document with title '{doc_title}' ({simplify_doc_title(doc_title)}) already exists in collection '{transkribus_collection_id}'. Upload canceled."
                 )
             else:
                 # # upload mets to transkribus
